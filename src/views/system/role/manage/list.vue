@@ -114,8 +114,8 @@
 
 <script>
 import { getRolePage, delRoleById } from '@/api/system/role'
-import RoleAdd from '@/views/system/role/add'
-import RoleEdit from '@/views/system/role/edit'
+import RoleAdd from '@/views/system/role/manage/add'
+import RoleEdit from '@/views/system/role/manage/edit'
 export default {
   name: 'RoleList',
   components: {
@@ -218,7 +218,7 @@ export default {
     //用户详情
     detail(id){
       this.$router.push({
-        path: '/system/role/detail',
+        name:'role-detail',
         query: {
           roleId: id
         }

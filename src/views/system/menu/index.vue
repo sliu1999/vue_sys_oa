@@ -43,33 +43,41 @@
                 <el-main>
                     <div>
                         <el-form ref="menuInfo" :model="menuInfo" :rules="rules" label-width="80px">
-                        <el-form-item label="菜单名称" prop="name">
-                            <el-input v-model="menuInfo.name"></el-input>
+                        <el-form-item label="菜单名称" prop="title">
+                            <el-input v-model="menuInfo.title"></el-input>
                         </el-form-item>
-                        <el-form-item label="路由地址" prop="action">
-                            <el-input  v-model="menuInfo.action"></el-input>
+                        <el-form-item label="路由地址" prop="path">
+                            <el-input  v-model="menuInfo.path"></el-input>
+                        </el-form-item>
+                        <el-form-item label="路由名称" prop="name">
+                            <el-input  v-model="menuInfo.name"></el-input>
+                        </el-form-item>
+                        <el-form-item label="视图组件" prop="component">
+                            <el-input  v-model="menuInfo.component"></el-input>
+                        </el-form-item>
+                        <el-form-item label="跳转路径" prop="redirect">
+                            <el-input  v-model="menuInfo.redirect"></el-input>
+                        </el-form-item>
+                        <el-form-item label="是否隐藏菜单" prop="hidden">
+                            <el-radio v-model="menuInfo.hidden" label="true">是</el-radio>
+                            <el-radio v-model="menuInfo.hidden" label="false">否</el-radio>
                         </el-form-item>
                         <el-form-item label="父级菜单">
                             <el-select v-model="menuInfo.parentId" clearable :disabled="menuInfo.parentId==null" placeholder="请选择父级菜单">
                             <el-option
                                 v-for="item in parentList"
                                 :key="item.id"
-                                :label="item.name"
+                                :label="item.title"
                                 :value="item.id">
                             </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="菜单类型" prop="menuType">
-                            <el-radio-group v-model="menuInfo.menuType">
-                                <el-radio :label="0">菜单</el-radio>
-                                <el-radio :label="1">子路由</el-radio>
-                            </el-radio-group>
-                        </el-form-item>
+                        
                         <el-form-item label="排序" prop="sort">
                             <el-input type="number" v-model="menuInfo.sort"></el-input>
                         </el-form-item>
-                        <el-form-item label="样式" prop="style">
-                            <el-input  v-model="menuInfo.style"></el-input>
+                        <el-form-item label="样式" prop="icon">
+                            <el-input  v-model="menuInfo.icon"></el-input>
                         </el-form-item>
                         <el-form-item>
                             <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -94,19 +102,23 @@ export default {
             defaultExpanded: [],
             menuInfo: {
                 id: null,
-                name: '',
-                action: '',
-                menuType: '',
-                sort: '',
-                style: ''
+                parentId:null,
+                name: null,
+                path: null,
+                component:null,
+                redirect:null,
+                title: null,
+                sort: null,
+                icon: null,
+                hidden:null
             },
             parentList:null,
             rules: {
-                name: [
+                title: [
                     { required: true, message: '请输入菜单名称', trigger: 'blur' },
                     { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
                 ],
-                action: [
+                path: [
                     { required: true, message: '菜单路由', trigger: 'blur' },
                 ],
                 sort: [
@@ -177,12 +189,12 @@ export default {
         //在最后一个一级菜单后加一个一级菜单
         appendParent(){
              const after = {
-                name: '菜单',
-                menuType: 0
+                title: '菜单',
+                
             }
             saveMenu(after)
                 .then(res => {
-                    const newAfter = { id: res.data.id, label: res.data.name, children: [] };
+                    const newAfter = { id: res.data.id, label: res.data.title, children: [] };
                     if (this.lastTreeKey != null && this.lastTreeKey != undefined) {
                         this.$refs.tree.insertAfter(newAfter,this.lastTreeKey)
                         //获取菜单详情
@@ -195,7 +207,7 @@ export default {
                             type: 'success',
                             message: '一级菜单创建完成'
                         })
-                        this.parentList.push({id:res.data.id, name:'菜单'})
+                        this.parentList.push({id:res.data.id, title:'菜单'})
                     }else{
                         //新增第一个父级菜单
                         this.init()
@@ -210,12 +222,11 @@ export default {
         append(data) {
             const child = {
                 parentId: data.id,
-                name: '子菜单',
-                menuType: 0
+                title: '子菜单'
             }
             saveMenu(child)
                 .then(res => {
-                    const newChild = { id: res.data.id, label: res.data.name, parentId: data.id, children: [] };
+                    const newChild = { id: res.data.id, label: res.data.title, parentId: data.id, children: [] };
                     if (!data.children) {
                     this.$set(data, 'children', []);
                     }

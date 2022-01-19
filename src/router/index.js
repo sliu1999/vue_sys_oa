@@ -227,56 +227,61 @@ export const constantRoutes = [
         meta: { title: 'profile', icon: 'user', noCache: true }
       }
     ]
-  }
+  },
+ 
 ]
 
 /**
- * asyncRoutes
+ * 动态路由通过接口获得
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  // {
+     // {
   //   path: '/system',
   //   component: Layout,
-  //   redirect: '/system/user',
-  //   alwaysShow: true, // will always show the root menu
-  //   name: 'System',
-  //   meta: {
-  //     title: '系统管理',
-  //     icon: 'documentation',
-  //     roles: ['2018113009'] // you can set roles in root nav
-  //   },
+  //   redirect: '/system/role/role-list', 
+  //   alwaysShow: true, 
+  //   name: 'system', 
+  //   meta: {title: '系统管理',icon: 'documentation',roles: ['2018113009']},
   //   children: [
+  //     {
+  //       path: 'role',
+  //       component: () => import('@/views/system/role/index'),
+  //       name: 'role',
+  //       redirect:'/system/role/role-list',
+  //       meta: { title: '角色管理',roles: ['2018113009'],affix: true},
+  //       children:[
+  //         {
+  //           path: 'role-list',
+  //           hidden:true,
+  //           component: () => import('@/views/system/role/manage/list'),
+  //           name: 'role-list',
+  //           meta: { title: '角色列表',roles: ['2018113009'],affix: true},
+  //         },
+  //         {
+  //           path: 'role-detail',
+  //           hidden: true, 
+  //           component: () => import('@/views/system/role/manage/detail'),
+  //           name: 'role-detail',
+  //           meta: {title: '角色详情',roles: ['2018113009'],affix: true}
+  //         },
+  //       ]
+  //     },
   //     {
   //       path: 'user',
   //       component: () => import('@/views/system/user/list'),
-  //       name: 'User',
-  //       meta: {
-  //         title: '用户管理',
-  //         roles: ['2018113009'] // or you can only set roles in sub nav
-  //       }
+  //       name: 'user',
+  //       meta: {title: '用户管理',roles: ['2018113009'],affix: true}
   //     },
   //     {
-  //       path: 'detail',
-  //       hidden: true,
-  //       component: () => import('@/views/system/user/detail'),
-  //       name: 'detail',
-  //       mate: {
-  //         title: '用户详情',
-  //         roles: ['2018113009']
-  //       }
+  //       path: 'menu',
+  //       component: () => import('@/views/system/menu/index'),
+  //       name: 'menu',
+  //       meta: {title: '菜单管理',roles: ['2018113009'],affix: true}
   //     },
-  //     {
-  //       path: 'role',
-  //       component: () => import('@/views/system/role'),
-  //       name: 'Role',
-  //       meta: {
-  //         title: '角色管理',
-  //         roles: ['2018113009'] // or you can only set roles in sub nav
-  //       }
-  //     }
   //   ]
   // },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
