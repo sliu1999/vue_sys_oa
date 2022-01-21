@@ -41,7 +41,7 @@ module.exports = {
     //添加代理 解决跨域 部署到nginx调用接口会产生404问题 暂时没用到， 
     proxy: {
       [process.env.VUE_APP_BASE_API]: {
-        target: 'http://localhost:8888',
+        target: 'http://175.24.206.215:8888',
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''

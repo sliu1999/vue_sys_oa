@@ -228,7 +228,45 @@ export const constantRoutes = [
       }
     ]
   },
- 
+  {
+    path: '/organization',
+    component: Layout,
+    redirect: '/organization/staff/staff-list', 
+    alwaysShow: true, 
+    name: 'organization', 
+    meta: {title: '组织架构',icon: 'documentation',roles: ['2018113009']},
+    children: [
+      {
+        path: 'staff',
+        component: () => import('@/views/organization/staff/index'),
+        name: 'staff',
+        redirect:'/organization/staff/staff-list',
+        meta: { title: '员工管理',roles: ['2018113009'],affix: true},
+        children:[
+          {
+            path: 'staff-list',
+            hidden:true,
+            component: () => import('@/views/organization/staff/manage/list'),
+            name: 'staff-list',
+            meta: { title: '员工列表',roles: ['2018113009'],affix: true},
+          },
+          {
+            path: 'staff-detail',
+            hidden: true, 
+            component: () => import('@/views/organization/staff/manage/detail'),
+            name: 'staff-detail',
+            meta: {title: '员工详情',roles: ['2018113009'],affix: true}
+          },
+        ]
+      },
+      {
+        path: 'department',
+        component: () => import('@/views/organization/department/index'),
+        name: 'department',
+        meta: {title: '部门管理',roles: ['2018113009'],affix: true}
+      }
+    ]
+  },
 ]
 
 /**
@@ -236,7 +274,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-     // {
+  // {
   //   path: '/system',
   //   component: Layout,
   //   redirect: '/system/role/role-list', 
@@ -281,6 +319,7 @@ export const asyncRoutes = [
   //     },
   //   ]
   // },
+
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

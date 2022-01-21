@@ -91,8 +91,8 @@
 
 <script>
 import { getStaffsPage, delStaffById } from '@/api/organization/staffs'
-import StaffAdd from '@/views/organization/staff/add'
-import StaffEdit from '@/views/organization/staff/edit'
+import StaffAdd from '@/views/organization/staff/manage/add'
+import StaffEdit from '@/views/organization/staff/manage/edit'
 export default {
   name: 'StaffList',
   components: {
@@ -195,7 +195,7 @@ export default {
     //用户详情
     detail(id){
       this.$router.push({
-        path: '/organization/staff/detail',
+         name:'staff-detail',
         query: {
           staffId: id
         }
